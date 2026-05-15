@@ -112,29 +112,23 @@ const radiusScale = d3
   .domain([0, d3.max(stations, (d) => d.totalTraffic)])
   .range([0, 25]);
 
-
-// Append circles to the SVG for each station
 const circles = svg
   .selectAll('circle')
   .data(stations, (d) => d.short_name)
   .enter()
   .append('circle')
   .attr('r', d => radiusScale(d.totalTraffic))
-  .attr('fill', 'steelblue') // Circle fill color
-  .attr('stroke', 'white') // Circle border color
-  .attr('stroke-width', 1) // Circle border thickness
+  .attr('stroke', 'white')
+  .attr('stroke-width', 1)
   .attr('opacity', 0.6)
+  .style('--departure-ratio', (d) => stationFlow(d.departures / d.totalTraffic))
   .each(function (d) {
-    // Add <title> for browser tooltips
     d3.select(this)
       .append('title')
       .text(
         `${d.totalTraffic} trips (${d.departures} departures, ${d.arrivals} arrivals)`,
-      )
-  .style('--departure-ratio', (d) =>
-    stationFlow(d.departures / d.totalTraffic),
-  );
-    }); // Circle opacity
+      );
+  });
 
 // Function to update circle positions when the map moves/zooms
 function updatePositions() {
@@ -152,16 +146,8 @@ map.on('zoom', updatePositions); // Update during zooming
 map.on('resize', updatePositions); // Update on window resize
 map.on('moveend', updatePositions); // Final adjustment after movement ends
 
-// const timeSlider = document.getElementById('time-slider');
-// const selectedTime = document.getElementById('selected-time');
-// const anyTimeLabel = document.getElementById('any-time');
 
 function updateScatterPlot(timeFilter) {
-  // Get only the trips that match the selected time filter
-//   const filteredTrips = filterTripsbyTime(trips, timeFilter);
-
-//   // Recompute station traffic based on the filtered trips
-//   const filteredStations = computeStationTraffic(stations, filteredTrips);
 const filteredStations = computeStationTraffic(stations, timeFilter);
 
   timeFilter === -1 ? radiusScale.range([0, 25]) : radiusScale.range([3, 50]);
@@ -207,20 +193,7 @@ function formatTime(minutes) {
   return date.toLocaleString('en-US', { timeStyle: 'short' }); // Format as HH:MM AM/PM
 }
 
-// function updateTimeDisplay() {
-//   let timeFilter = Number(timeSlider.value); // Get slider value
 
-//   if (timeFilter === -1) {
-//     selectedTime.textContent = ''; // Clear time display
-//     anyTimeLabel.style.display = 'block'; // Show "(any time)"
-//   } else {
-//     selectedTime.textContent = formatTime(timeFilter); // Display formatted time
-//     anyTimeLabel.style.display = 'none'; // Hide "(any time)"
-//   }
-
-//   // Call updateScatterPlot to reflect the changes on the map
-//   updateScatterPlot(timeFilter);
-// }
 
 function computeStationTraffic(stations, timeFilter = -1) {
   const departures = d3.rollup(
