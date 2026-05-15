@@ -53,14 +53,15 @@ map.addLayer({
 }
 });
 
-// let jsonData;
+let jsonData;
   try {
     const jsonurl =  'https://dsc106.com/labs/lab07/data/bluebikes-stations.json';
 
     // Await JSON fetch
-    const jsonData = await d3.json(jsonurl);
+    jsonData = await d3.json(jsonurl);
 
-    console.log('Loaded JSON Data:', jsonData); // Log to verify structure
+    console.log('Loaded JSON Data:', jsonData);
+    
   } catch (error) {
     console.error('Error loading JSON:', error); // Handle errors
   }
