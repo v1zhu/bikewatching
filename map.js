@@ -55,7 +55,7 @@ map.addLayer({
 
 let jsonData;
   try {
-    const jsonurl = INPUT_BLUEBIKES_CSV_URL;
+    const jsonurl =  'https://dsc106.com/labs/lab07/data/bluebikes-stations.json';
 
     // Await JSON fetch
     const jsonData = await d3.json(jsonurl);
@@ -65,7 +65,7 @@ let jsonData;
     console.error('Error loading JSON:', error); // Handle errors
   }
 
-  let stations = jsonData.data.stations;
+let stations = jsonData.data.stations;
 console.log('Stations Array:', stations);
 
 // Append circles to the SVG for each station
@@ -99,7 +99,7 @@ map.on('moveend', updatePositions); // Final adjustment after movement ends
 
 
 function getCoords(station) {
-  const point = new mapboxgl.LngLat(+station.Lon, +station.Lat); // Convert lon/lat to Mapbox LngLat
+  const point = new mapboxgl.LngLat(+station.lon, +station.lat); // Convert lon/lat to Mapbox LngLat
   const { x, y } = map.project(point); // Project to pixel coordinates
   return { cx: x, cy: y }; // Return as object for use in SVG attributes
 }
