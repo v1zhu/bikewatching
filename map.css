@@ -24,14 +24,28 @@ body {
   pointer-events: auto;
 }
 
+circle {
+  --color-departures: steelblue;
+  --color-arrivals: darkorange;
+  --color: color-mix(
+    in oklch,
+    var(--color-departures) calc(100% * var(--departure-ratio)),
+    var(--color-arrivals)
+  );
+  fill: var(--color);
+}
+
 header {
   display: flex;
   gap: 1em;
   align-items: baseline;
-  margin-left: auto;
 }
 
-time{
+label {
+  margin-left: auto; /* pushes label to the right, title stays left */
+}
+
+time {
   display: block;
 }
 
@@ -39,4 +53,36 @@ em {
   display: block;
   color: #888;
   font-style: italic;
+}
+
+.legend {
+  display: flex;
+  align-items: center;
+  gap: 1em;
+  margin-block: 1em;
+}
+
+.legend > div {
+  display: flex;
+  align-items: center;
+  gap: 0.3em;
+}
+
+.legend > div::before {
+  content: "";
+  display: inline-block;
+  width: 1em;
+  height: 1em;
+  border-radius: 50%;
+  background: var(--color);
+}
+
+.legend > div, circle {
+  --color-departures: steelblue;
+  --color-arrivals: darkorange;
+  --color: color-mix(
+    in oklch,
+    var(--color-departures) calc(100% * var(--departure-ratio)),
+    var(--color-arrivals)
+  );
 }
