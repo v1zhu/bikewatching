@@ -62,7 +62,7 @@ let jsonData;
   } catch (error) {
     console.error('Error loading JSON:', error); // Handle errors
   }
-});
 
-let stations = jsonData.data.stations;
+  let stations = jsonData.data.stations;
 console.log('Stations Array:', stations);
+});
