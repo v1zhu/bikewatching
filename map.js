@@ -53,7 +53,7 @@ map.addLayer({
 }
 });
 
-let jsonData;
+// let jsonData;
   try {
     const jsonurl =  'https://dsc106.com/labs/lab07/data/bluebikes-stations.json';
 
